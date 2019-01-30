@@ -1,10 +1,12 @@
 import numpy as np
-from constants import mLi, kB
+from lithdata.constants import mLi, kB
+from lithdata.utility import langmuir_flux
 
 class LithiumProperties():
 
     def __init__(self):
-        self.m = constants.mLi # this exactly matches the mass in SPARTA, air.vss. 
+        #self.m = 1.1526e-26 # this exactly matches the mass in SPARTA, air.vss. 
+        self.m = mLi # this exactly matches the mass in SPARTA, air.vss. 
         heatVap = 147.0 / 6.022e23 # heat of vaporization in kJ per lithium atom (source?)
         kj_to_j = 1e3 # kilojoules to joules
         self.heat_vap = heatVap * kj_to_j
@@ -32,7 +34,7 @@ class LithiumProperties():
 
         Parameters: T in Kelvins
         """
-        kB = constants.kB
+        t_kelvin = 1.0 * np.array(t_kelvin)
         p = t_kelvin > 0
         res = np.zeros_like(t_kelvin)
         res[p] = self.vapor_pressure(t_kelvin[p]) / (kB * t_kelvin[p])
@@ -40,9 +42,8 @@ class LithiumProperties():
         return density
 
     def langmuir_flux(self, temperature):
-        kB = constants.kB
         temperature = 1.0 * np.array(temperature)
         """Calculates the equilibrium Langmuir flux in # m^{-2} s^{-1}."""
         density = self.vapor_density(temperature)
-        flux = density * np.sqrt(kB * temperature / (2 * np.pi * self.m))
+        flux = langmuir_flux(density, temperature, self.m)
         return flux
