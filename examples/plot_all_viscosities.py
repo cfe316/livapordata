@@ -4,6 +4,8 @@ from lithdata.li_property_library import LiPropertyLibrary
 
 lp = LiPropertyLibrary()
 
+plt.style.use('seaborn-colorblind')
+
 fig = plt.figure(figsize=(6, 4))
 ax = fig.add_subplot(1,1,1)
 
@@ -28,18 +30,13 @@ errors = lp.eta1_Vargaftik_and_Yargin_error(TK)
 e_minus, e_plus = error_bands(eta1, errors)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
 
-### Saturated
-TK = np.linspace(1057,2156, 20)
-pressures_kpa = lp.vapor_pressure_Browning_and_Potter(TK)/1000.
-keqs = lp.K_eq_Vargaftik_and_Yargin(TK)
-x2 = lp.x2_concentration_Vargaftik_and_Yargin(pressures_kpa, keqs)
-eta = yscale * lp.eta_Vargaftik_and_Yargin(x2, TK)
-ax.plot(TK, eta, color=colors[0])
-# Errors about 5% at the saturation line vs 3% for monomers.
+### Saturated, data
+TK, eta = lp.eta_sat_Vargaftik_and_Yargin_Table().T
+eta = yscale * eta
 errors = (5/3) * lp.eta1_Vargaftik_and_Yargin_error(TK)
 e_minus, e_plus = error_bands(eta, errors)
+ax.plot(TK, eta, color=colors[0])
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
-
 
 ## Stepanenko
 ### monomers
@@ -69,6 +66,9 @@ ax.plot(TK, eta1, label = 'Bouledroua et al, 2005', color=colors[2])
 
 ax.set_xlabel('T / K')
 ax.set_ylabel('$\eta$ / (µPa s)')
+plt.annotate('Monomers', xy=(0.68, 0.65), xycoords='axes fraction')
+plt.annotate('Saturated', xy=(0.65, 0.48), xycoords='axes fraction')
+plt.title('Viscosity of lithium vapor')
 
 ax.legend(loc=4)
 plt.show()
