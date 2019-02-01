@@ -1,6 +1,7 @@
 import numpy as np
-from numpy import sqrt, log, exp
+from numpy import sqrt, log, exp, pi
 from scipy.interpolate import interp1d
+from lithdata.constants import kB
 
 class LiPropertyLibrary():
 
@@ -237,6 +238,7 @@ class LiPropertyLibrary():
     # VHS model from Bird:
     def eta_Bird_VHS(self, T, vhs_model):
         """Bird 2013, Chapter 2, Eq 43
+        m, dref, omega, Tref = vhs_model
         """
         m, dref, omega, Tref = vhs_model
         mu_ref_numerator = (15 * sqrt(kB * m * Tref / pi))
