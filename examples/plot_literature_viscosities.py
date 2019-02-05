@@ -10,7 +10,7 @@ fig = plt.figure(figsize=(6, 4))
 ax = fig.add_subplot(1,1,1)
 
 colors = []
-for i in range(3):
+for i in range(4):
     color=next(ax._get_lines.prop_cycler)['color']
     colors.append(color)
 
@@ -37,6 +37,20 @@ errors = (5/3) * lp.eta1_Vargaftik_and_Yargin_error(TK)
 e_minus, e_plus = error_bands(eta, errors)
 ax.plot(TK, eta, color=colors[0])
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
+
+## V&Y 1991
+color = colors[3]
+TK = np.linspace(800, 2000, 20)
+eta1 = yscale * lp.eta1_Vargaftik_1991_Table(TK)
+ax.plot(TK, eta1, label='Vargaftik 1991', color=color)
+e_minus, e_plus = error_bands(eta1, 5)
+plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=color)
+
+### Saturated, data
+eta_sat = yscale * lp.eta_sat_Vargaftik_1991_Table(TK)
+e_minus, e_plus = error_bands(eta_sat, 5)
+ax.plot(TK, eta_sat, color=color)
+plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=color)
 
 ## Stepanenko
 ### monomers

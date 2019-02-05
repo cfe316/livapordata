@@ -145,6 +145,76 @@ class LiPropertyLibrary():
         x_2 = interp(TK)
         return x_2
 
+    # Varftik et al 1991, International Journal of Thermophysics
+    def eta1_Vargaftik_1991_Eq_6(self, TK):
+        return (129.1 + 0.100 * (TK - 1000)) * 1e-7
+
+    def eta_Vargaftik_1991_Eq_4(self, x2, TK):
+        """
+        Viscosity as a function of x2 and temperature
+
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+        """
+        b1, b2, b3, b4 = 4.094, 3.335, 0.864, -6.964e-2
+        print(b2)
+        numerator = 1 + b3 * x2 + b4 * x2**2
+        denominator = 1 + b1 * x2 + b2 * x2**2
+        eta = self.eta1_Vargaftik_1991_Eq_6(TK) * numerator / denominator
+        return eta
+
+    def eta1_Vargaftik_1991_Table(self, TK):
+        """
+        Monomer viscosity
+
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+
+        Table IV
+
+        Uncertainties: on the experiments:
+        "Average error for the value thus obtained is estimated to be 5 %."
+        """
+        data_T = np.arange(800,2600,100) # 800 to 2500
+        data_eta1 = np.array([100, 112, 123, 134, 145, 155,
+            166, 176, 186, 196, 205, 215,
+            224, 233, 242, 250, 260, 268])
+        interp = interp1d(data_T, data_eta1, kind='cubic', bounds_error=False)
+        eta1 = 1e-7 * interp(TK)
+        return eta1
+
+    def eta_sat_Vargaftik_1991_Table(self, TK):
+        """
+        Saturated viscosity
+
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+
+        Table IV
+
+        Uncertainties: on the experiments:
+        "Average error for the value thus obtained is estimated to be 5 %."
+        """
+        data_T = np.arange(800,2600,100) # 800 to 2500
+        data_eta_sat = np.array([97.2, 106, 113, 118, 123,
+            126, 129, 131, 133, 135, 137, 139,
+            140, 141, 143, 144, 146, 147])
+        interp = interp1d(data_T, data_eta_sat, kind='cubic', bounds_error=False)
+        eta_sat = 1e-7 * interp(TK)
+        return eta_sat
+
     # Bouledroua et al, 2005 Phys. Scr. 71 519
     def eta1_Boulederoua(self, TK):
         """
@@ -182,7 +252,7 @@ class LiPropertyLibrary():
         data_T = [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]
         data_eta1 = [23, 49, 75, 100, 123, 144, 164, 184, 202, 221]
         
-        interp = interp1d(data_T, data_eta1, kind='linear', bounds_error=False)
+        interp = interp1d(data_T, data_eta1, kind='cubic', bounds_error=False)
         eta1 = 1e-7 * interp(TK)
         return eta1
 
@@ -240,7 +310,8 @@ class LiPropertyLibrary():
         """Bird 2013, Chapter 2, Eq 43
         m, dref, omega, Tref = vhs_model
         """
-        m, dref, omega, Tref = vhs_model
+        v = vhs_model
+        m, dref, omega, Tref = v["mass"], v["d_ref"], v["omega"], v["T_ref"]
         mu_ref_numerator = (15 * sqrt(kB * m * Tref / pi))
         mu_ref_denominator = 2 * dref **2 * (7 - 2 * omega) * (5 - 2 * omega)
         mu_ref = mu_ref_numerator / mu_ref_denominator
@@ -253,13 +324,14 @@ class LiPropertyLibrary():
         """
         Bird 2013, Chapter 3, Eq 19, solved for mu.
         """
-        m, dref, omega, Tref, alpha = vss_model
+        v = vss_model
+        m, dr, w, Tr, a = v["mass"], v["d_ref"], v["omega"], v["T_ref"], v["alpha"]
         
-        mu_ref_numerator = (5 * (1 + alpha) * (2 + alpha) * sqrt(kB * m * Tref / pi))
-        mu_ref_denominator = 4 * dref **2 * (7 - 2 * omega) * (5 - 2 * omega)
+        mu_ref_numerator = (5 * (1 + a) * (2 + a) * sqrt(kB * m * Tr / pi))
+        mu_ref_denominator = 4 * a * dr **2 * (7 - 2 * w) * (5 - 2 * w)
         mu_ref = mu_ref_numerator / mu_ref_denominator
         
-        mu = mu_ref * (T / Tref) ** omega
+        mu = mu_ref * (T / Tr) ** w
         return mu
 
     #### Thermal conductivity data
@@ -299,6 +371,102 @@ class LiPropertyLibrary():
                                  )
         return lambda_total
 
+    def lambda_sat_Vargaftik_and_Yargin_Table(self, TK):
+        """
+        Vargaftik, N B, and V S Yargin. 
+        Ch 7.4: Thermal Conductivity and Viscosity of the Gaseous Phase.
+        Handbook of Thermodynamic and Transport Properties of Alkali Metals,
+        edited by R. W. Ohse, 45. Blackwell Scientific Publications, 1985.
+
+        Page 828, Table 37.
+
+        Uncertainties: "for lithium vapour, [...] ± 7 % at the saturation line"
+        """
+        data_T = np.arange(700,2025,25)
+        data_lambda_sats = np.array([497.2, 519.0, 541.6, 565.1, 589.2,
+                613.9, 638.8, 664.0, 689.2, 714.3, 739.2, 763.6, 787.4,
+                810.6, 833.1, 854.6, 875.3, 895.0, 913.6, 931.2, 947.8,
+                963.3, 977.7, 991.0, 
+                1003.4, 1014.8, 1025.2, 1034.6, 1043.3, 1051.0,
+                1058.0, 1064.3, 1069.9, 1074.8, 1079.1, 1082.9,
+                1086.1, 1088.9, 1091.2, 1093.2, 1094.8, 1096.0,
+                1097.0, 1097.7, 1098.1, 1098.3, 1098.3, 1098.2,
+                1097.8, 1097.3, 1096.7, 1096.0, 1095.1])
+        interp = interp1d(data_T, data_lambda_sats, kind='cubic', bounds_error=False)
+        lambda_sat = 1e-4 * interp(TK)
+        return lambda_sat
+
+    def lambda1_Vargaftik_1991_Eq_5(self, TK):
+        """
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+
+        Equation (5)
+        """
+        lambda1 = (541.0 + 0.485 * (TK - 1000)) * 1e-4
+        return lambda1
+
+    def lambda_Vargaftik_1991_Eq_3(self, x2, TK):
+        """
+        Thermal conductivity as a function of x2 and temperature
+
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+        """
+        pass
+
+
+    def lambda1_Vargaftik_1991_Table(self,TK):
+        """
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+
+        Table III
+
+        Uncertainties: on the experiments:
+        "Average error for the value thus obtained is estimated to be 5 %."
+        """
+        data_T = np.arange(800,2600,100) # 800 to 2500
+        data_lambda1 = np.array([450, 506, 558, 607, 655,
+            701, 745, 790, 834, 878, 921, 965, 
+            1008, 1050, 1092, 1131, 1169, 1203])
+        interp = interp1d(data_T, data_lambda1, kind='cubic', bounds_error=False)
+        lambda1 = 1e-4 * interp(TK)
+        return lambda1
+
+    def lambda_sat_Vargaftik_1991_Table(self,TK):
+        """
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+
+        Table III.
+        """
+        data_T = np.arange(800,2600,100) # 800 to 2500
+        data_lambda_sat = np.array([543, 652, 753, 841, 913,
+            966, 1003, 1029, 1045, 1055, 1058, 1058, 1054,
+            1048, 1041, 1031, 1020, 1006])
+        interp = interp1d(data_T, data_lambda_sat, kind='cubic', 
+                bounds_error=False)
+        lambda_sat = 1e-4 * interp(TK)
+        return lambda_sat
+
+
     def lambda1_Bouledroua_Table(self, TK):
         """
         Parameters:
@@ -324,7 +492,7 @@ class LiPropertyLibrary():
                 [1800, 90.58],
                 [2000, 99.10]]
         data = np.array(data)
-        interp = interp1d(data[:,0], data[:,1], kind='linear', bounds_error=False)
+        interp = interp1d(data[:,0], data[:,1], kind='cubic', bounds_error=False)
         lambda1 = 1e-3 * interp(TK)
         return lambda1
 
