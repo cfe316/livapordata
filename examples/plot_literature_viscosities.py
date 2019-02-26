@@ -10,7 +10,7 @@ fig = plt.figure(figsize=(6, 4))
 ax = fig.add_subplot(1,1,1)
 
 colors = []
-for i in range(4):
+for i in range(5):
     color=next(ax._get_lines.prop_cycler)['color']
     colors.append(color)
 
@@ -52,6 +52,11 @@ e_minus, e_plus = error_bands(eta_sat, 5)
 ax.plot(TK, eta_sat, color=color)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=color)
 
+###Extrapolated saturated data using Equation 4.
+#TK = np.linspace(600,2000,20)
+#eta_sat = yscale * lp.extrapolation_of_V_91_low_pressure(TK)
+#ax.plot(TK, eta_sat, color=color)
+
 ## Stepanenko
 ### monomers
 TK = np.linspace(1500,2000,20)
@@ -74,9 +79,14 @@ e_minus, e_plus = error_bands(eta, 3.5)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[1])
 
 ## Bouledroua
-TK = np.linspace(200,2000,20)
+TK = np.linspace(200,2000,40)
 eta1 = yscale * lp.eta1_Bouledroua_Table_I(TK)
 ax.plot(TK, eta1, label = 'Bouledroua et al, 2005', color=colors[2])
+
+## Fialho
+TK = np.linspace(700,2000,40)
+eta1 = yscale * lp.eta1_Fialho_1993_Table(TK)
+ax.plot(TK, eta1, label = 'Fialho et al, 1993', color=colors[4])
 
 ax.set_xlabel('T / K')
 ax.set_ylabel('$\eta$ / (µPa s)')
