@@ -18,7 +18,6 @@ print("VHS Model is:")
 print(vhs_b)
 
 eta_bouledroua_normalized = visc_func_to_fit(TK) / eta_vhs
-eta_v_normalized = lp.eta1_Vargaftik_1991_Table(TK) / eta_vhs
 
 plt.style.use('seaborn-colorblind')
 fig = plt.figure(figsize=(6, 4))
