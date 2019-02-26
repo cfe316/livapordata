@@ -25,7 +25,7 @@ yscale = 1e6
 ### monomers
 TK = np.linspace(700, 2500, 20)
 eta1 = yscale * lp.eta1_Vargaftik_and_Yargin(TK)
-ax.plot(TK, eta1, label='Vargaftik and Yargin 1985', color=colors[0])
+ax.plot(TK, eta1, label='Vargaftik, Yargin et al 1985', color=colors[0])
 errors = lp.eta1_Vargaftik_and_Yargin_error(TK)
 e_minus, e_plus = error_bands(eta1, errors)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
@@ -42,7 +42,7 @@ plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
 color = colors[3]
 TK = np.linspace(800, 2000, 20)
 eta1 = yscale * lp.eta1_Vargaftik_1991_Table(TK)
-ax.plot(TK, eta1, label='Vargaftik 1991', color=color)
+ax.plot(TK, eta1, label='Vargaftik, Vinogradov et al 1991', color=color)
 e_minus, e_plus = error_bands(eta1, 5)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=color)
 
