@@ -139,8 +139,8 @@ class LiPropertyLibrary():
 
     # Vargaftik and Voljak table
     def x2_concentration_Vargaftik_and_Voljak(self, TK):
-        data_T = [800, 850, 900, 1200, 1500, 1800, 2000]
-        data_x2 = [0.007953, 0.01134, 0.0155, 0.05383, 0.1035, 0.1505, 0.1767]
+        data_T = [800, 850, 900, 1000, 1100, 1200, 1500, 1800, 2000]
+        data_x2 = [0.007953, 0.01134, 0.0155, 0.02596, 0.03894, 0.05383, 0.1035, 0.1505, 0.1767]
         interp = interp1d(data_T, data_x2, kind='cubic', bounds_error=False)
         x_2 = interp(TK)
         return x_2
@@ -170,11 +170,17 @@ class LiPropertyLibrary():
         https://doi.org/10.1007/BF00506124.
         """
         b1, b2, b3, b4 = 4.094, 3.335, 0.864, -6.964e-2
-        print(b2)
         numerator = 1 + b3 * x2 + b4 * x2**2
         denominator = 1 + b1 * x2 + b2 * x2**2
         eta = self.eta1_Vargaftik_1991_Eq_6(TK) * numerator / denominator
         return eta
+
+    def extrapolation_of_V_91_low_pressure(self, TK):
+        Keq = self.K_eq_Vargaftik_and_Yargin(TK)
+        P_kpa = self.vapor_pressure_Browning_and_Potter(TK) / 1000
+        x2 = self.x2_concentration_Vargaftik_and_Yargin(P_kpa, Keq)
+        eta_sat = self.eta_Vargaftik_1991_Eq_4(x2, TK)
+        return eta_sat
 
     def eta1_Vargaftik_1991_Table(self, TK):
         """
@@ -223,6 +229,7 @@ class LiPropertyLibrary():
         interp = interp1d(data_T, data_eta_sat, kind='cubic', bounds_error=False)
         eta_sat = 1e-7 * interp(TK)
         return eta_sat
+
 
     # Bouledroua et al, 2005 Phys. Scr. 71 519
     def eta1_Bouledroua(self, TK):
@@ -313,6 +320,27 @@ class LiPropertyLibrary():
                          [1983, 208]], dtype='float')
         data[:,1] = 1e-7 * data[:,1]
         return data
+
+    def eta1_Fialho_1993_Table(self,TK):
+        data_T = np.arange(700,2100,100)
+        data_eta1 = np.array([8.56,
+                           9.71,
+                           10.82,
+                           11.89,
+                           12.93,
+                           13.93,
+                           14.91,
+                           15.86,
+                           16.80,
+                           17.72,
+                           18.63,
+                           19.53,
+                           20.41,
+                           21.30])
+        interp = interp1d(data_T, data_eta1, kind='cubic', bounds_error=False)
+        eta1 = 1e-6 * interp(TK)
+        return eta1
+
 
     # VHS model from Bird:
     def eta_Bird_VHS(self, T, vhs_model):
