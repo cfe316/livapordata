@@ -145,8 +145,17 @@ class LiPropertyLibrary():
         x_2 = interp(TK)
         return x_2
 
-    # Varftik et al 1991, International Journal of Thermophysics
     def eta1_Vargaftik_1991_Eq_6(self, TK):
+        """Linear fit to monomer viscosity
+        
+        Equation (6) of
+        Vargaftik, N. B., Yu. K. Vinogradov, V. I. Dolgov, V. G. Dzis,
+        I. F. Stepanenko, Yu. K. Yakimovich, and V. S. Yargin.
+        "Viscosity and Thermal Conductivity of Alkali Metal Vapors at 
+        Temperatures up to 2000 K." International Journal of 
+        Thermophysics 12, no. 1 (January 1991): 85–103.
+        https://doi.org/10.1007/BF00506124.
+        """
         return (129.1 + 0.100 * (TK - 1000)) * 1e-7
 
     def eta_Vargaftik_1991_Eq_4(self, x2, TK):
@@ -216,7 +225,7 @@ class LiPropertyLibrary():
         return eta_sat
 
     # Bouledroua et al, 2005 Phys. Scr. 71 519
-    def eta1_Boulederoua(self, TK):
+    def eta1_Bouledroua(self, TK):
         """
         Viscosity of the monomers as a function of temperature.
 
