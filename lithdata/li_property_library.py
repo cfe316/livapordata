@@ -2,7 +2,7 @@ import numpy as np
 from numpy import sqrt, log, exp, pi
 from scipy.interpolate import interp1d
 from lithdata.constants import kB
-from lithdata.vaporpressure import press_Browning_and_Potter
+from lithdata.vaporpressure import press_best
 
 class LiPropertyLibrary():
 
@@ -158,7 +158,7 @@ class LiPropertyLibrary():
 
     def extrapolation_of_V_91_low_pressure(self, TK):
         Keq = self.K_eq_Vargaftik_and_Yargin(TK)
-        P_kpa = press_Browning_and_Potter(TK) / 1000
+        P_kpa = press_best(TK) / 1000
         x2 = self.x2_concentration_Vargaftik_and_Yargin(P_kpa, Keq)
         eta_sat = self.eta_Vargaftik_1991_Eq_4(x2, TK)
         return eta_sat
