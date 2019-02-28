@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from lithdata.li_property_library import LiPropertyLibrary
+from lithdata.vaporpressure import press_Browning_and_Potter
 
 lp = LiPropertyLibrary()
 
@@ -68,7 +69,7 @@ plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[1])
 ### Saturated
 TK = np.linspace(1057,2000, 20)
 # This seems to be the best source of vapor pressure data
-pressures_kpa = lp.vapor_pressure_Browning_and_Potter(TK)/1000.
+pressures_kpa = press_Browning_and_Potter(TK)/1000.
 # This seems to be the best source data on Keq and the x2 fraction
 keqs = lp.K_eq_Vargaftik_and_Yargin(TK)
 x2 = lp.x2_concentration_Vargaftik_and_Yargin(pressures_kpa, keqs)

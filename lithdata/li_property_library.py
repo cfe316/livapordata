@@ -2,31 +2,12 @@ import numpy as np
 from numpy import sqrt, log, exp, pi
 from scipy.interpolate import interp1d
 from lithdata.constants import kB
+from lithdata.vaporpressure import press_Browning_and_Potter
 
 class LiPropertyLibrary():
 
     def __init__(self):
         pass
-
-    ### Vapor pressure
-    def vapor_pressure_Browning_and_Potter(self, t_kelvin):
-        """Lithium vapor pressure in Pascals
-
-        Browning, P, and P. E. Potter. “Assessment of the Experimentally 
-        Determined Vapour Pressures of the Liquid Alkali Metals.”
-        In Handbook of Thermodynamic and Transport Properties of Alakali Metals, 
-        349–58. Oxford: Blackwell Scientific Publications, 1985.
-
-        Section 6.2, Page 350, Equation (2)
-        Valid over 1057 K < T < 2156 K.
-        """
-        c1 = 13.0719
-        c2 = -18880.659
-        c3 = -0.4942
-        megapascals_to_pascals = 1e6
-        p_megapascals = exp(c1 + c2 / t_kelvin + c3 * log(t_kelvin))
-        pressure_pa = p_megapascals * megapascals_to_pascals
-        return pressure_pa
 
     ### Transport properties: viscosity, thermal conductivity, diffusivity
 
@@ -177,7 +158,7 @@ class LiPropertyLibrary():
 
     def extrapolation_of_V_91_low_pressure(self, TK):
         Keq = self.K_eq_Vargaftik_and_Yargin(TK)
-        P_kpa = self.vapor_pressure_Browning_and_Potter(TK) / 1000
+        P_kpa = press_Browning_and_Potter(TK) / 1000
         x2 = self.x2_concentration_Vargaftik_and_Yargin(P_kpa, Keq)
         eta_sat = self.eta_Vargaftik_1991_Eq_4(x2, TK)
         return eta_sat
