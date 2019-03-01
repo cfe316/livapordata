@@ -5,7 +5,7 @@ This python module contains various data useful for physical modeling of lithium
 
 As functions of temperature:
 
-- Vapor pressure.
+- Vapor pressure
 - Viscosity
 - Thermal conductivity
 - Self-diffusivity
