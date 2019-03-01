@@ -10,4 +10,6 @@ As functions of temperature:
 - Thermal conductivity
 - Self-diffusivity
 
+This module is most concerned with temperatures from 300 K to 1500 K.
+
 Multiple sources from the literature are included wherever possible. All data sources are cited.
