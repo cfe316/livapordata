@@ -1,10 +1,7 @@
 import numpy as np
 from numpy import sqrt, log, log10, exp, pi
 from lithdata.constants import kB
-
-TORR_TO_PASCALS = 133.322
-BARS_TO_PASCALS = 1e5
-ATM_TO_PASCALS = 101325.
+from lithdata.constants import TORR_TO_PASCALS, BARS_TO_PASCALS, ATM_TO_PASCALS
 
 def press_best(t_k):
     """Best estimate for vapor pressure"""

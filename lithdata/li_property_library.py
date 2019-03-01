@@ -322,36 +322,6 @@ class LiPropertyLibrary():
         eta1 = 1e-6 * interp(TK)
         return eta1
 
-
-    # VHS model from Bird:
-    def eta_Bird_VHS(self, T, vhs_model):
-        """Bird 2013, Chapter 2, Eq 43
-        m, dref, omega, Tref = vhs_model
-        """
-        v = vhs_model
-        m, dref, omega, Tref = v["mass"], v["d_ref"], v["omega"], v["T_ref"]
-        mu_ref_numerator = (15 * sqrt(kB * m * Tref / pi))
-        mu_ref_denominator = 2 * dref **2 * (7 - 2 * omega) * (5 - 2 * omega)
-        mu_ref = mu_ref_numerator / mu_ref_denominator
-        
-        mu = mu_ref * (T / Tref) ** omega
-        
-        return mu
-
-    def eta_Bird_VSS(self, T, vss_model):
-        """
-        Bird 2013, Chapter 3, Eq 19, solved for mu.
-        """
-        v = vss_model
-        m, dr, w, Tr, a = v["mass"], v["d_ref"], v["omega"], v["T_ref"], v["alpha"]
-        
-        mu_ref_numerator = (5 * (1 + a) * (2 + a) * sqrt(kB * m * Tr / pi))
-        mu_ref_denominator = 4 * a * dr **2 * (7 - 2 * w) * (5 - 2 * w)
-        mu_ref = mu_ref_numerator / mu_ref_denominator
-        
-        mu = mu_ref * (T / Tr) ** w
-        return mu
-
     #### Thermal conductivity data
     def lambda1_Vargaftik_and_Yargin(self, TK):
         """
@@ -513,14 +483,6 @@ class LiPropertyLibrary():
         interp = interp1d(data[:,0], data[:,1], kind='cubic', bounds_error=False)
         lambda1 = 1e-3 * interp(TK)
         return lambda1
-
-    def K_Bird_VHS(self, T, vhs_model):
-        """Bird 2013, Chapter 2, Equation 44.
-        """
-        m, dref, omega, Tref = vhs_model
-        mu = eta_Bird_VHS(T, vhs_model)
-        K = (15/4) * kB * mu / m
-        return K
 
     #### Self-diffusion coefficients
     def D11_Fialho_1993_Table(self, TK):
