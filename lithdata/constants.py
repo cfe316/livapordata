@@ -9,10 +9,6 @@ kB = 1.3806513e-23 # J / K
 eV = 1.6021766208e-19 # J
 u = 1.660539040e-27 # kg
 
-#Atomic weights of the elements 2013 (IUPAC Technical Report)
-mLiConventionalAtomicWeight = 6.94 
-mLi = mLiConventionalAtomicWeight * u
-
 #unit conversions
 in_to_m = 0.0254
 

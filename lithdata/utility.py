@@ -5,6 +5,12 @@ def pickle_obj(obj, filename):
     output = open(filename, 'wb')
     pickle.dump(obj, output)
     output.close()
+#-------------------------------------
+
+def error_bands(value, percent):
+    e_plus = (1 + 0.01 * percent) * value
+    e_minus = (1 - 0.01 * percent) * value
+    return e_minus, e_plus
 
 # ---------------------------------
 # physics formulas

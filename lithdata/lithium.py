@@ -1,5 +1,6 @@
 import numpy as np
-from lithdata.constants import mLi, kB
+from lithdata.constants import kB
+from lithdata.basics import mLi
 from lithdata.utility import langmuir_flux
 from lithdata.vaporpressure import press_best
 
