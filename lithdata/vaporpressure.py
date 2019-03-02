@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import sqrt, log, log10, exp, pi
-from lithdata.constants import kB
 from lithdata.constants import TORR_TO_PASCALS, BARS_TO_PASCALS, ATM_TO_PASCALS
 
 def press_best(t_k):
