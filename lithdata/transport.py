@@ -1,7 +1,6 @@
 import numpy as np
 from numpy import sqrt, log, exp, pi
 from scipy.interpolate import interp1d
-from lithdata.constants import kB
 from lithdata.vaporpressure import press_best
 
 def eta1_Vargaftik_and_Yargin(TK):

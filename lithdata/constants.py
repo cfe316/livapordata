@@ -3,15 +3,16 @@
 # "CODATA recommended values of the 
 #   fundamental physical constants: 2014"
 # Rev. Mod. Phys., Vol. 88, No. 3, July–September 2016
-# Equation 247
-kB = 1.3806513e-23 # J / K 
-# Table XXXII
-eV = 1.6021766208e-19 # J
-u = 1.660539040e-27 # kg
+from scipy.constants import physical_constants
 
-#unit conversions
-in_to_m = 0.0254
+from scipy.constants import torr as TORR_TO_PASCALS
+from scipy.constants import bar as BARS_TO_PASCALS
+from scipy.constants import atm as ATM_TO_PASCALS
+from scipy.constants import inch as in_to_m
 
-TORR_TO_PASCALS = 133.322
-BARS_TO_PASCALS = 1e5
-ATM_TO_PASCALS = 101325.
+from scipy.constants import Boltzmann as kB
+from scipy.constants import eV
+
+u, _, _ = physical_constants['unified atomic mass unit']
+
+del physical_constants
