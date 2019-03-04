@@ -86,11 +86,13 @@ def press_Vargaftik_and_Kapitonov(t_k):
     Inzh.-Fiz. Zh., 43, No. 3, 494 (1982).
 
     I don't have that paper. Experiments by Vargaftik were performed over
-    1226 K to 1415 K, so we could take that as the applicable range.
+    1226 K to 1415 K, so we could, conservative, take that as 
+    the applicable range.
     """
     p_atm = 10 ** (+8.5088 - 8363 / t_k - 1.02573 * log10(t_k) 
                    -1.3091e-4 * t_k + 1.08872 * exp(-2940 / t_k))
     p_pa = ATM_TO_PASCALS * p_atm
+    return p_pa
 
 def press_Golubchikov(t_k):
     """
