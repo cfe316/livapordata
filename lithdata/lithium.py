@@ -28,7 +28,7 @@ class LithiumProperties():
         res = np.zeros_like(t_kelvin)
         res[p] = self.vapor_pressure(t_kelvin[p]) / (kB * t_kelvin[p])
         density = res
-        pass
+        return density
  
     def vapor_mass_density(self, t_kelvin):
         """Equilibrium lithium vapor density in kg/m^3.
