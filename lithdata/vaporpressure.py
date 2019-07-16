@@ -71,21 +71,21 @@ def press_Maucherat_1939(t_k):
     p_pa = TORR_TO_PASCALS * p_torr
     return p_pa
 
-def press_Vargaftik_and_Kapitonov(t_k):
+def press_Yargin_and_Sidorov(t_k):
     """
+    V. S. Yargin, N. I. Sidorov, E. L. Studnikov, and Yu. K. Vinogradov,
+    "Transport properties of saturated lithium vapor,"
+    Inzh.-Fiz. Zh., 43, No. 3, 494 (1982).
+
+    I don't have this paper: it is cited by 
+
     Vargaftik, N. B., V. M. Kapitonov, and A. A. Voshchinin
     "Experimental Study of the Thermal Conductivity of Lithium Vapor."
     Journal of Engineering Physics 49, no. 4 (October 1985): 1208-1212.
     https://doi.org/10.1007/BF00871920.
 
-    For the pressure curve this paper cites:
-
-    V. S. Yargin, N. I. Sidorov, E. L. Studnikov, and Yu. K. Vinogradov,
-    "Transport properties of saturated lithium vapor,"
-    Inzh.-Fiz. Zh., 43, No. 3, 494 (1982).
-
     I don't have that paper. Experiments by Vargaftik were performed over
-    1226 K to 1415 K, so we could, conservative, take that as 
+    1226 K to 1415 K, so we could, very conservatively, take that as 
     the applicable range.
     """
     p_atm = 10 ** (+8.5088 - 8363 / t_k - 1.02573 * log10(t_k) 
@@ -103,7 +103,7 @@ def press_Golubchikov(t_k):
 
     Reported for a temperature range of: 180-1300°C = 453 K to 1573 K.
 
-    Note that this formula is cited as coming from one of two Russian papers:
+    Note that this formula is cited as coming from one of two Russian books / papers:
 
     Bystrov, P.I., D. N. Kagan, G. A. Krechtova and E. E. Shpilrain, 
     Liquid Metal Heat Carriers, Thermal Pipes and Power Installations

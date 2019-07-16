@@ -20,6 +20,8 @@ tsteps = 200
 t1 = np.linspace(1057, 2156, tsteps)
 f1 = press_Browning_and_Potter
 p1 = f1(t1)
+t1_extra = np.linspace(500,1057, tsteps)
+p1_extra = f1(t1_extra)
 
 t2 = np.linspace(298.14, 1599.99, tsteps)
 f2 = press_NIST_webbook
@@ -35,8 +37,10 @@ f4 = press_Maucherat_1939
 p4 = f4(t4)
 
 t5 = np.linspace(1216, 1415, tsteps)
-f5 = press_Vargaftik_and_Kapitonov
+f5 = press_Yargin_and_Sidorov
 p5 = f5(t5)
+t5_extra = np.linspace(516, 1216, tsteps)
+p5_extra = f5(t5_extra)
 
 t6 = np.linspace(453, 1573, tsteps)
 f6 = press_Golubchikov
@@ -92,14 +96,15 @@ ps = np.nan_to_num(ps)
 interp = interp1d(t_k, ps, kind='cubic', bounds_error=False)
 
 ax.plot(t1, p1 / interp(t1), label='Browning and Potter, 1985', color=colors[0])
+ax.plot(t1_extra, p1_extra / interp(t1_extra), color=colors[0], dashes=[4,4])
 ax.plot(t2, p2 / interp(t2), label='NIST webbook, Antoine Equation fit', color=colors[1])
 ax.plot(t3, p3 / interp(t3), label='Davison, 1968', color=colors[2])
 ax.fill_between(t3, p3_minus / interp(t3), p3_plus / interp(t3), alpha=0.2, color=colors[2])
 
 ax.plot(t4, p4 / interp(t4), label='Maucherat, 1939', color=colors[3])
-ax.plot(t5, p5 / interp(t5), label='Vargaftik and Kapitonov, 1985', color=colors[4])
+ax.plot(t5, p5 / interp(t5), label='Yargin and Sidorov, 1982', color=colors[4])
+ax.plot(t5_extra, p5_extra / interp(t5_extra), color=colors[4], dashes=[4,4])
 ax.plot(t6, p6 / interp(t6), label='in Golubchikov, 1996', color=colors[5])
-ax.set_xlim([700,1100])
 plt.legend()
 plt.show()
 
