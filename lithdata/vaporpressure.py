@@ -6,12 +6,49 @@ def press_best(t_k):
     """Best estimate for vapor pressure"""
     return press_Browning_and_Potter(t_k)
 
+def press_Alcock(t_k):
+    """
+    Alcock, C. B., Itkin, V. P., Horrigan, M. K.  "Vapour pressure equations for
+    the metallic elements 298-2500K."
+    Canadian metallurgical quarterly, Vol 23, No 3, Pages 309-313, 1984.
+
+    Equation for Li liquid.
+
+    I'm fairly certain this is one of the 'practical' equations,
+    for which they claim +- 5% accuracy.
+
+    Valid from the melting point to 1000K.
+
+    For this formula, Alcock cites an unpublished paper by themself and V P Itkin, as well as
+    
+    L. V. Gurvich, I. V. Veits and V. A. Medvedev et al.,
+    Termodinamicheskie Svoistva Indidual'nykh Veshchestv
+    (Thermodynamic properties of individual substances), Vols 1-4.
+    Izdatel'stvo "Nauka", Moscow (1978 - 1982)
+    """
+    A = 5.055
+    B = -8023
+    p_atm = 10 ** (A + B / t_k)
+    p_pa = ATM_TO_PASCALS * p_atm
+    return p_pa
+
+def press_Schins(t_k):
+    """
+    Schins, H. E. J., Liquid metals for heat-pipes, properties,
+    plots, and data sheets. Report EUR 3653e, Joint Nuclear Research Center,
+    Ispra Establishment, Italy, 1967
+    """
+    p_torr = 10 ** (7.67 - 7740/t_k)
+    p_pa = TORR_TO_PASCALS * p_torr
+    return p_pa
+
+
 def press_Browning_and_Potter(t_k):
     """Lithium vapor pressure in Pascals
 
     Browning, P, and P. E. Potter. “Assessment of the Experimentally 
     Determined Vapour Pressures of the Liquid Alkali Metals.”
-    In Handbook of Thermodynamic and Transport Properties of Alakali Metals, 
+    In Handbook of Thermodynamic and Transport Properties of Alkali Metals, 
     349–58. Oxford: Blackwell Scientific Publications, 1985.
 
     Section 6.2, Page 350, Equation (2)
@@ -113,6 +150,52 @@ def press_Golubchikov(t_k):
 
     Griaznov, G.M. et al, Materials in Liquid Metal Systems of Fusion Reactors.
     Energoatomizdat, Moscow, 1989.
+    Probably the second.
     """
     p_pa = 10 ** (12.4037 - 8283.1 / t_k - 0.7081 * log10(t_k))
     return p_pa
+
+def press_Bystrov(t_k):
+    """
+    Bystrov, P.I., D. N. Kagan, G. A. Krechtova and E. E. Shpilrain, 
+    Liquid Metal Heat Carriers, Thermal Pipes and Power Installations
+    Science, Moscow, 1988
+
+    Applicable range: 700 K to 2000 K.
+    "The error is \delta P = 2%"
+    """
+    tau = t_k * 1.0e-3
+    c = -2.0532
+    am1 = -19.4268
+    a0  = 9.4993
+    a1  = 0.7530
+
+    p_megapascals = exp(c * log(tau) + am1 / tau + a0 + a1 * tau)
+    megapascals_to_pascals = 1e6
+    pressure_pa = p_megapascals * megapascals_to_pascals
+    return pressure_pa
+
+def press_JSME_data_book(t_k):
+    """
+    Antoine equation fit, found in 
+
+    The Japan Society of Mechanical Engineers (JSME),
+    JSME Data Book: Heat Transfer, fifth ed.,
+    Maruzen, Tokyo, 2009 (in Japanese)
+    
+    (I don't directly have this book.)
+
+    Cited by: 
+    Kanemura et al, Analytical and experimental study of 
+    the evaporation and deposition rates from a high-speed 
+    liquid lithium jet. Fusion Engineering and Design,
+    122, pages 176-185, November, 2017.
+    """
+    a = 9.94079
+    b = -8001.8
+    c = 6.676
+    pressure_pa = 10 ** (a + b / (t_k + c))
+    return pressure_pa
+
+
+

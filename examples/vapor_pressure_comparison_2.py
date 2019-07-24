@@ -20,7 +20,7 @@ tsteps = 200
 t1 = np.linspace(1057, 2156, tsteps)
 f1 = press_Browning_and_Potter
 p1 = f1(t1)
-t1_extra = np.linspace(500,1057, tsteps)
+t1_extra = np.linspace(500,2156, tsteps)
 p1_extra = f1(t1_extra)
 
 t2 = np.linspace(298.14, 1599.99, tsteps)
@@ -64,8 +64,8 @@ t10 = np.linspace(1150, 1930, tsteps)
 f10 = press_Schins
 p10 = f10(t10)
 
-fs = [f1, f2, f3, f5, f6, f7, f8, f9, f10]
-ts = [t1, t2, t3, t5, t6, t7, t8, t9, t10]
+fs = [f1]
+ts = [t1_extra]
 t_lo = [tr[0]-0.1 for tr in ts]
 t_hi = [tr[-1]+0.1 for tr in ts]
 
@@ -115,7 +115,7 @@ interp = interp1d(t_k, ps, kind='cubic', bounds_error=False)
 
 ax.plot(t1, p1 / interp(t1), label='Browning and Potter, 1985', color=colors[0])
 ax.plot(t1_extra, p1_extra / interp(t1_extra), color=colors[0], dashes=[4,4])
-ax.plot(t2, p2 / interp(t2), label='NIST webbook, Antoine Equation fit', color=colors[1])
+ax.plot(t2, p2 / interp(t2), label='NIST, fit to Hicks, 1963', color=colors[1])
 ax.plot(t3, p3 / interp(t3), label='Davison, 1968', color=colors[2])
 ax.fill_between(t3, p3_minus / interp(t3), p3_plus / interp(t3), alpha=0.2, color=colors[2])
 
@@ -126,14 +126,13 @@ ax.plot(t6, p6 / interp(t6), label='in Golubchikov, 1996', color=colors[5])
 
 ax.plot(t7, p7 / interp(t7), label='Bystrov, 1982', color=colors[6])
 ax.fill_between(t7, p7_minus / interp(t7), p7_plus / interp(t7), alpha=0.2, color=colors[6])
-
 ax.plot(t8, p8 / interp(t8), label='JSME, 2009', color=colors[7])
 ax.plot(t9, p9 / interp(t9), label='Alcock, 1984', color=colors[8])
 ax.fill_between(t9, p9_minus / interp(t9), p9_plus / interp(t9), alpha=0.2, color=colors[8])
 
 ax.plot(t10, p10 / interp(t10), label='Schins, 1967', color=colors[9])
+ax.set_xlabel('Temperature / K')
 
-ax.set(ylim=[0.8,1.3])
 plt.legend()
 plt.show()
 
@@ -142,6 +141,5 @@ plt.show()
 #ax.set_title('Literature vapor pressures, as reported in:')
 #ax.set_ylim([1e-10,3e6])
 #ax.set_ylabel('Pressure / Pa')
-#ax.set_xlabel('Temperature / K')
 #plt.show()
 #
