@@ -26,5 +26,5 @@ def surface_tension(TK=453.7):
     sigma = 0.447 - 1.07e-4 * TK - 1.351e-8 * TK ** 2
     return sigma
 
-# estimate for liquid density
+# rough estimate for liquid density
 rho_liquid = 500 # kg per cubic meter
