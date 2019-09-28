@@ -19,7 +19,8 @@ def press_Alcock(t_k):
 
     Valid from the melting point to 1000K.
 
-    For this formula, Alcock cites an unpublished paper by themself and V P Itkin, as well as
+    For this formula, Alcock cites an unpublished paper by
+    themself and V. P. Itkin, as well as
     
     L. V. Gurvich, I. V. Veits and V. A. Medvedev et al.,
     Termodinamicheskie Svoistva Indidual'nykh Veshchestv
@@ -37,6 +38,8 @@ def press_Schins(t_k):
     Schins, H. E. J., Liquid metals for heat-pipes, properties,
     plots, and data sheets. Report EUR 3653e, Joint Nuclear Research Center,
     Ispra Establishment, Italy, 1967
+    
+    Plotted by Schins from 1150 to ~1920 K.
     """
     p_torr = 10 ** (7.67 - 7740/t_k)
     p_pa = TORR_TO_PASCALS * p_torr
@@ -54,6 +57,11 @@ def press_Browning_and_Potter(t_k):
     Section 6.2, Page 350, Equation (2)
 
     Valid over 1057 K < T < 2156 K.
+
+    An expression for uncertainty is given but it's not entirely clear what it means. The equation is written as
+    
+    ln P(MPa) = 13.0719 ± 1.8424 - (18880.659 ± 347.220)/T(K)
+                - 0.4942 ± 0.2208 ln T(K)
     """
     c1 = 13.0719
     c2 = -18880.659
@@ -114,16 +122,11 @@ def press_Yargin_and_Sidorov(t_k):
     "Transport properties of saturated lithium vapor,"
     Inzh.-Fiz. Zh., 43, No. 3, 494 (1982).
 
-    I don't have this paper: it is cited by 
+    This paper is in Russian. The equation was synthesized
+    from experiments at pressures between 253 Pa and 1.25e5 Pa, 
+    roughly 1050 K to 1700 K.
 
-    Vargaftik, N. B., V. M. Kapitonov, and A. A. Voshchinin
-    "Experimental Study of the Thermal Conductivity of Lithium Vapor."
-    Journal of Engineering Physics 49, no. 4 (October 1985): 1208-1212.
-    https://doi.org/10.1007/BF00871920.
-
-    I don't have that paper. Experiments by Vargaftik were performed over
-    1226 K to 1415 K, so we could, very conservatively, take that as 
-    the applicable range.
+    No estimate of the uncertainty is provided.
     """
     p_atm = 10 ** (+8.5088 - 8363 / t_k - 1.02573 * log10(t_k) 
                    -1.3091e-4 * t_k + 1.08872 * exp(-2940 / t_k))

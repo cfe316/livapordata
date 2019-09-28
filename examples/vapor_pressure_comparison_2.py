@@ -36,10 +36,10 @@ t4 = np.linspace(735, 915, tsteps)
 f4 = press_Maucherat_1939
 p4 = f4(t4)
 
-t5 = np.linspace(1216, 1415, tsteps)
+t5 = np.linspace(1050, 1700, tsteps)
 f5 = press_Yargin_and_Sidorov
 p5 = f5(t5)
-t5_extra = np.linspace(516, 1216, tsteps)
+t5_extra = np.linspace(516, 1050, tsteps)
 p5_extra = f5(t5_extra)
 
 t6 = np.linspace(453, 1573, tsteps)
@@ -132,14 +132,9 @@ ax.fill_between(t9, p9_minus / interp(t9), p9_plus / interp(t9), alpha=0.2, colo
 
 ax.plot(t10, p10 / interp(t10), label='Schins, 1967', color=colors[9])
 ax.set_xlabel('Temperature / K')
+ax.set_ylim([0.7,1.3])
 
+ax.set_title('Literature vapor pressures,\n normalized to those of Browning and Potter')
 plt.legend()
 plt.show()
 
-#ax.set_yscale('log')
-#ax.legend()
-#ax.set_title('Literature vapor pressures, as reported in:')
-#ax.set_ylim([1e-10,3e6])
-#ax.set_ylabel('Pressure / Pa')
-#plt.show()
-#
