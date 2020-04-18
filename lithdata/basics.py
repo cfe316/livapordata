@@ -31,3 +31,5 @@ rho_liquid = 500 # kg m⁻³
 
 # estimate for solid density
 rho_solid = 534 # kg m⁻³
+
+T_melting = 180.50 # CRC handbook
