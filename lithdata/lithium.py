@@ -45,6 +45,6 @@ class LithiumProperties():
     def langmuir_flux(self, temperature):
         temperature = 1.0 * np.array(temperature)
         """Calculates the equilibrium Langmuir flux in # m^{-2} s^{-1}."""
-        density = self.vapor_density(temperature)
+        density = self.vapor_number_density(temperature)
         flux = langmuir_flux(density, temperature, self.m)
         return flux
