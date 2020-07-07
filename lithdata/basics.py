@@ -1,4 +1,4 @@
-from lithdata.constants import u
+from lithdata.constants import u, eV
 
 #Atomic weights of the elements 2013 (IUPAC Technical Report)
 mLiConventionalAtomicWeight = 6.94 
@@ -33,3 +33,7 @@ rho_liquid = 500 # kg m⁻³
 rho_solid = 534 # kg m⁻³
 
 T_melting = 180.50 # CRC handbook
+
+# from the source on wikipedia
+latent_heat_vaporization_kJ_per_mol = 147.1 # kJ / mol
+latent_heat_vaporization_J_per_kg = (1e3 * 147.1) / (1e-3 * mLiConventionalAtomicWeight) # kJ / mol

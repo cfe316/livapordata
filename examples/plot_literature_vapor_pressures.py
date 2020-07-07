@@ -59,8 +59,8 @@ f9 = press_Alcock
 p9 = f9(t9)
 p9_minus, p9_plus = error_bands(p9, 5.0)
 
-t10 = np.linspace(1150, 1930, tsteps)
-f10 = press_Schins
+t10 = np.linspace(1374, 1881, tsteps)
+f10 = press_Bohdansky
 p10 = f10(t10)
 
 ax.plot(t1, p1, label='Browning and Potter, 1985', color=colors[0])
@@ -80,7 +80,7 @@ ax.plot(t8, p8, label='JSME, 2009', color=colors[7])
 ax.plot(t9, p9, label='Alcock, 1984', color=colors[8])
 ax.fill_between(t9, p9_minus, p9_plus, alpha=0.2, color=colors[8])
 
-ax.plot(t10, p10, label='Schins, 1967', color=colors[9])
+ax.plot(t10, p10, label='Bohdansky, 1967', color=colors[9])
 
 ax.set_yscale('log')
 ax.legend()

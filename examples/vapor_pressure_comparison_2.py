@@ -60,8 +60,8 @@ f9 = press_Alcock
 p9 = f9(t9)
 p9_minus, p9_plus = error_bands(p9, 5.0)
 
-t10 = np.linspace(1150, 1930, tsteps)
-f10 = press_Schins
+t10 = np.linspace(1374, 1881, tsteps)
+f10 = press_Bohdansky
 p10 = f10(t10)
 
 fs = [f1]
@@ -130,7 +130,7 @@ ax.plot(t8, p8 / interp(t8), label='JSME, 2009', color=colors[7])
 ax.plot(t9, p9 / interp(t9), label='Alcock, 1984', color=colors[8])
 ax.fill_between(t9, p9_minus / interp(t9), p9_plus / interp(t9), alpha=0.2, color=colors[8])
 
-ax.plot(t10, p10 / interp(t10), label='Schins, 1967', color=colors[9])
+ax.plot(t10, p10 / interp(t10), label='Bohdansky, 1967', color=colors[9])
 ax.set_xlabel('Temperature / K')
 ax.set_ylim([0.7,1.3])
 

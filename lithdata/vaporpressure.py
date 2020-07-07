@@ -33,13 +33,16 @@ def press_Alcock(t_k):
     p_pa = ATM_TO_PASCALS * p_atm
     return p_pa
 
-def press_Schins(t_k):
+def press_Bohdansky(t_k):
     """
-    Schins, H. E. J., Liquid metals for heat-pipes, properties,
-    plots, and data sheets. Report EUR 3653e, Joint Nuclear Research Center,
-    Ispra Establishment, Italy, 1967
+    Bohdansky, J., Vapor pressure of different metals in 
+    the pressure range of 50 to 4000 torr.
+    The Journal of Physical Chemistry, Volume 71, Issue 2,
+    pages 215-217. Jan 1967.
+
+    Data ranged from 1374 K to 1881 K.
     
-    Plotted by Schins from 1150 to ~1920 K.
+    Coefficients in Table III.
     """
     p_torr = 10 ** (7.67 - 7740/t_k)
     p_pa = TORR_TO_PASCALS * p_torr
@@ -49,7 +52,7 @@ def press_Schins(t_k):
 def press_Browning_and_Potter(t_k):
     """Lithium vapor pressure in Pascals
 
-    Browning, P, and P. E. Potter. “Assessment of the Experimentally 
+    Browning, P., and Potter, P. E. “Assessment of the Experimentally 
     Determined Vapour Pressures of the Liquid Alkali Metals.”
     In Handbook of Thermodynamic and Transport Properties of Alkali Metals, 
     349–58. Oxford: Blackwell Scientific Publications, 1985.
