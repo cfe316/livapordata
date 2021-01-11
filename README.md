@@ -28,4 +28,14 @@ This module is most concerned with temperatures from 300 K to 1500 K.
 
 Multiple sources from the literature are included wherever possible. (Nearly) All data sources are cited.
 
+Installation
+============
+
+This package can be installed from `PyPi`, using pip:
+
+`pip install livapordata`
+
+Citing
+======
+
 If you use this package in your research, please cite it (via Zenodo; link above).
