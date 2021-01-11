@@ -7,11 +7,11 @@ from livapordata.transport import *
 plt.style.use('seaborn-colorblind')
 
 fig = plt.figure(figsize=(6, 4))
-ax = fig.add_subplot(1,1,1)
+ax = fig.add_subplot(1, 1, 1)
 
 colors = []
 for i in range(5):
-    color=next(ax._get_lines.prop_cycler)['color']
+    color = next(ax._get_lines.prop_cycler)['color']
     colors.append(color)
 
 yscale = 1e6
@@ -28,7 +28,7 @@ plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
 ### Saturated, data
 TK, eta = eta_sat_Vargaftik_and_Yargin_Table().T
 eta = yscale * eta
-errors = (5/3) * eta1_Vargaftik_and_Yargin_error(TK)
+errors = (5 / 3) * eta1_Vargaftik_and_Yargin_error(TK)
 e_minus, e_plus = error_bands(eta, errors)
 ax.plot(TK, eta, color=colors[0])
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[0])
@@ -54,34 +54,34 @@ plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=color)
 
 ## Stepanenko
 ### monomers
-TK = np.linspace(1500,2000,20)
-eta1 = yscale * eta_Stepanenko(0,TK)
-ax.plot(TK, eta1, label = 'Stepanenko et al, 1986', color=colors[1])
+TK = np.linspace(1500, 2000, 20)
+eta1 = yscale * eta_Stepanenko(0, TK)
+ax.plot(TK, eta1, label='Stepanenko et al, 1986', color=colors[1])
 e_minus, e_plus = error_bands(eta1, 3.5)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[1])
 
 ### Saturated
-TK = np.linspace(1057,2000, 20)
+TK = np.linspace(1057, 2000, 20)
 # This seems to be the best source of vapor pressure data
-pressures_kpa = press_Browning_and_Potter(TK)/1000.
+pressures_kpa = press_Browning_and_Potter(TK) / 1000.
 # This seems to be the best source data on Keq and the x2 fraction
 keqs = K_eq_Vargaftik_and_Yargin(TK)
 x2 = x2_concentration_Vargaftik_and_Yargin(pressures_kpa, keqs)
 
-eta = yscale * eta_Stepanenko(x2,TK)
+eta = yscale * eta_Stepanenko(x2, TK)
 ax.plot(TK, eta, color=colors[1])
 e_minus, e_plus = error_bands(eta, 3.5)
 plt.fill_between(TK, e_minus, e_plus, alpha=0.2, color=colors[1])
 
 ## Bouledroua
-TK = np.linspace(200,2000,40)
+TK = np.linspace(200, 2000, 40)
 eta1 = yscale * eta1_Bouledroua_Table_I(TK)
-ax.plot(TK, eta1, label = 'Bouledroua et al, 2005', color=colors[2])
+ax.plot(TK, eta1, label='Bouledroua et al, 2005', color=colors[2])
 
 ## Fialho
-TK = np.linspace(700,2000,40)
+TK = np.linspace(700, 2000, 40)
 eta1 = yscale * eta1_Fialho_1993_Table(TK)
-ax.plot(TK, eta1, label = 'Fialho et al, 1993', color=colors[4])
+ax.plot(TK, eta1, label='Fialho et al, 1993', color=colors[4])
 
 ax.set_xlabel('T / K')
 ax.set_ylabel('$\eta$ / (µPa s)')
