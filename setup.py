@@ -14,8 +14,12 @@ setuptools.setup(
     url="https://github.com/cfe316/livapordata",
     packages=setuptools.find_packages(),
     classifiers=[
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
+        "Topic :: Scientific/Engineering :: Physics",
+        "License :: OSI Approved :: BSD License",
+        "Intended Audience :: Science/Research",
     ],
     python_requires='>=3.6',
     install_requires=[
