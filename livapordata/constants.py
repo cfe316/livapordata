@@ -1,6 +1,6 @@
 # some constants for general use with simulations.
 
-# "CODATA recommended values of the 
+# "CODATA recommended values of the
 #   fundamental physical constants: 2014"
 # Rev. Mod. Phys., Vol. 88, No. 3, July–September 2016
 from scipy.constants import physical_constants

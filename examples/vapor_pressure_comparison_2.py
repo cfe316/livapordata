@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
-from lithdata.vaporpressure import *
-from lithdata.utility import error_bands
+from livapordata.vaporpressure import *
+from livapordata.utility import error_bands
 
 # Simple plot of all the literature vapor pressures.
 # Because of the extreme ranges involved it's difficult to see the differences.

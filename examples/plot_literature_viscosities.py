@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from lithdata.vaporpressure import press_Browning_and_Potter
-from lithdata.utility import error_bands
-from lithdata.transport import *
+from livapordata.vaporpressure import press_Browning_and_Potter
+from livapordata.utility import error_bands
+from livapordata.transport import *
 
 plt.style.use('seaborn-colorblind')
 

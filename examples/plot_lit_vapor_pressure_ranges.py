@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from lithdata.vaporpressure import *
-from lithdata.utility import error_bands
+from livapordata.vaporpressure import *
+from livapordata.utility import error_bands
 
 fig = plt.figure(figsize=(10, 4))
 ax = fig.add_subplot(1,1,1)
