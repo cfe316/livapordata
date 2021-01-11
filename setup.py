@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="livapordata",
-    version="0.9.0",
+    version="0.9.1",
     author="Jacob Schwartz",
     author_email="jacobas@princeton.edu",
     description="Literature data on lithium, especially its vapor",
