@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/168408921.svg)](https://zenodo.org/badge/latestdoi/168408921)
+
 Lithium vapor data
 ==================
 
@@ -25,3 +27,5 @@ And for convenience, provides basic data on
 This module is most concerned with temperatures from 300 K to 1500 K.
 
 Multiple sources from the literature are included wherever possible. (Nearly) All data sources are cited.
+
+If you use this package in your research, please cite it (via Zenodo; link above).
