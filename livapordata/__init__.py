@@ -1,1 +1,1 @@
-# A really great package for lithium
+# Literature data for lithium vapor
