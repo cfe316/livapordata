@@ -5,6 +5,7 @@ from numpy import sqrt, log, exp, pi
 from scipy.interpolate import interp1d
 from scipy.constants import gas_constant as R_gas
 
+
 def eta1_Vargaftik_and_Yargin(TK):
     """Dynamic viscosity of Li monomers
 
@@ -29,6 +30,7 @@ def eta1_Vargaftik_and_Yargin(TK):
     Equation (56), page 821."""
     eta1 = 1e-7 * (130.6 + 0.1014 * (TK - 1000) - 4.55e-6 * (TK - 1000)**2)
     return eta1
+
 
 def eta1_Vargaftik_and_Yargin_error(TK):
     """Estimated error in dynamic viscosity
@@ -63,7 +65,8 @@ def eta1_Vargaftik_and_Yargin_error(TK):
     """
     x1, y1 = (700, 3.8)
     x2, y2 = (2500, 1.5)
-    return y1 + (y2 - y1) * (TK - x1)/(x2 - x1)
+    return y1 + (y2 - y1) * (TK - x1) / (x2 - x1)
+
 
 def eta_Vargaftik_and_Yargin(x2, TK):
     """Viscosity with two components, monomer and dimer.
@@ -100,6 +103,7 @@ def eta_Vargaftik_and_Yargin(x2, TK):
                       - 42 * x2**3 +  142 * x2**4
                      - 479 * x2**5 + 1600 * x2**6)
     return eta
+
 
 def eta_sat_Vargaftik_and_Yargin_Table():
     """Dynamic viscosity of saturated Li vapor
@@ -163,8 +167,9 @@ def x2_concentration_Vargaftik_and_Yargin(P_kpa, Keq):
     L.D. Volyak, Physical Constants and Properties of Substances,
     Thermophysical Properties of Substances 49, GSSSD, Moscow, 1968
     """
-    x2 = 1 - 2/(1 + sqrt(1 + 3.9477e-2 * P_kpa / Keq))
+    x2 = 1 - 2 / (1 + sqrt(1 + 3.9477e-2 * P_kpa / Keq))
     return x2
+
 
 def phi_V_and_Y(component, T):
     """Reduced thermodynamical potential
@@ -219,6 +224,7 @@ def phi_V_and_Y(component, T):
          + t[6] * x**3)
     return phi
 
+
 def K_eq_Vargaftik_and_Yargin(T_gas, d_0_0=107800):
     """Equilibrium constant
 
@@ -255,8 +261,9 @@ def K_eq_Vargaftik_and_Yargin(T_gas, d_0_0=107800):
     """
     phi1 = phi_V_and_Y(1, T_gas)
     phi2 = phi_V_and_Y(2, T_gas)
-    K_eq = exp((2 * phi1 - phi2)/R_gas - d_0_0 / (R_gas * T_gas))
+    K_eq = exp((2 * phi1 - phi2) / R_gas - d_0_0 / (R_gas * T_gas))
     return K_eq
+
 
 def x2_concentration_Vargaftik_and_Voljak(TK):
     """Diatomic molecule fraction in a saturated vapor
@@ -281,10 +288,14 @@ def x2_concentration_Vargaftik_and_Voljak(TK):
     Ohse, R. W., Ed.; Blackwell Scientific Publications, 1985; p 12.
     """
     data_T = [800, 850, 900, 1000, 1100, 1200, 1500, 1800, 2000]
-    data_x2 = [0.007953, 0.01134, 0.0155, 0.02596, 0.03894, 0.05383, 0.1035, 0.1505, 0.1767]
+    data_x2 = [
+        0.007953, 0.01134, 0.0155, 0.02596, 0.03894, 0.05383, 0.1035, 0.1505,
+        0.1767
+    ]
     interp = interp1d(data_T, data_x2, kind='cubic', bounds_error=False)
     x_2 = interp(TK)
     return x_2
+
 
 def eta1_Vargaftik_1991_Eq_6(TK):
     """Linear fit to monomer viscosity
@@ -310,6 +321,7 @@ def eta1_Vargaftik_1991_Eq_6(TK):
     https://doi.org/10.1007/BF00506124.
     """
     return (129.1 + 0.100 * (TK - 1000)) * 1e-7
+
 
 def eta_Vargaftik_1991_Eq_4(x2, TK):
     """Viscosity as a function of x2 and temperature
@@ -342,12 +354,14 @@ def eta_Vargaftik_1991_Eq_4(x2, TK):
     eta = eta1_Vargaftik_1991_Eq_6(TK) * numerator / denominator
     return eta
 
+
 def extrapolation_of_V_91_low_pressure(TK):
     Keq = K_eq_Vargaftik_and_Yargin(TK)
     P_kpa = press_best(TK) / 1000
     x2 = x2_concentration_Vargaftik_and_Yargin(P_kpa, Keq)
     eta_sat = eta_Vargaftik_1991_Eq_4(x2, TK)
     return eta_sat
+
 
 def eta1_Vargaftik_1991_Table(TK):
     """Monomer viscosity
@@ -377,13 +391,15 @@ def eta1_Vargaftik_1991_Table(TK):
     Thermophysics 12, no. 1 (January 1991): 85–103.
     https://doi.org/10.1007/BF00506124.
     """
-    data_T = np.arange(800,2600,100) # 800 to 2500
-    data_eta1 = np.array([100, 112, 123, 134, 145, 155,
-        166, 176, 186, 196, 205, 215,
-        224, 233, 242, 250, 260, 268])
+    data_T = np.arange(800, 2600, 100)  # 800 to 2500
+    data_eta1 = np.array([
+        100, 112, 123, 134, 145, 155, 166, 176, 186, 196, 205, 215, 224, 233,
+        242, 250, 260, 268
+    ])
     interp = interp1d(data_T, data_eta1, kind='cubic', bounds_error=False)
     eta1 = 1e-7 * interp(TK)
     return eta1
+
 
 def eta_sat_Vargaftik_1991_Table(TK):
     """Saturated vapor viscosity
@@ -413,10 +429,11 @@ def eta_sat_Vargaftik_1991_Table(TK):
     Thermophysics 12, no. 1 (January 1991): 85–103.
     https://doi.org/10.1007/BF00506124.
     """
-    data_T = np.arange(800,2600,100) # 800 to 2500
-    data_eta_sat = np.array([97.2, 106, 113, 118, 123,
-        126, 129, 131, 133, 135, 137, 139,
-        140, 141, 143, 144, 146, 147])
+    data_T = np.arange(800, 2600, 100)  # 800 to 2500
+    data_eta_sat = np.array([
+        97.2, 106, 113, 118, 123, 126, 129, 131, 133, 135, 137, 139, 140, 141,
+        143, 144, 146, 147
+    ])
     interp = interp1d(data_T, data_eta_sat, kind='cubic', bounds_error=False)
     eta_sat = 1e-7 * interp(TK)
     return eta_sat
@@ -457,6 +474,7 @@ def eta1_Bouledroua(TK):
     eta1 = 1e-7 * A * TK**alpha
     return eta1
 
+
 def eta1_Bouledroua_Table_I(TK):
     """Viscosity of Li monomer gas
 
@@ -490,6 +508,7 @@ def eta1_Bouledroua_Table_I(TK):
     eta1 = 1e-7 * interp(TK)
     return eta1
 
+
 def eta_Stepanenko(X2, T):
     """Dynamic viscosity
 
@@ -521,9 +540,10 @@ def eta_Stepanenko(X2, T):
     "Based on the analysis of the experimental errors, the accuracy of the
     data obtained has been estimated to be 3-4%."
     """
-    eta = 1e-7 * (178 - 530 * (X2 - 0.05) +0.071 * (T - 1700))
+    eta = 1e-7 * (178 - 530 * (X2 - 0.05) + 0.071 * (T - 1700))
     eta_filtered = np.where(T >= 1500., eta, np.nan)
     return eta_filtered
+
 
 def eta_Stepanenko_Table():
     """Viscosity of Li vapor
@@ -636,6 +656,7 @@ def lambda1_Vargaftik_and_Yargin(TK):
     lambda1 = 1e-4 * (587.7 + 0.4562 * (TK - 1000) - 20.5e-6 * (TK - 1000)**2)
     return lambda1
 
+
 def lambda_Vargaftik_and_Yargin(x2, TK):
     """Thermal conductivity with finite dimer fraction
 
@@ -699,19 +720,22 @@ def lambda_sat_Vargaftik_and_Yargin_Table(TK):
     -----
     Uncertainties: "for lithium vapour, [...] ± 7 % at the saturation line"
     """
-    data_T = np.arange(700,2025,25)
-    data_lambda_sats = np.array([497.2, 519.0, 541.6, 565.1, 589.2,
-            613.9, 638.8, 664.0, 689.2, 714.3, 739.2, 763.6, 787.4,
-            810.6, 833.1, 854.6, 875.3, 895.0, 913.6, 931.2, 947.8,
-            963.3, 977.7, 991.0,
-            1003.4, 1014.8, 1025.2, 1034.6, 1043.3, 1051.0,
-            1058.0, 1064.3, 1069.9, 1074.8, 1079.1, 1082.9,
-            1086.1, 1088.9, 1091.2, 1093.2, 1094.8, 1096.0,
-            1097.0, 1097.7, 1098.1, 1098.3, 1098.3, 1098.2,
-            1097.8, 1097.3, 1096.7, 1096.0, 1095.1])
-    interp = interp1d(data_T, data_lambda_sats, kind='cubic', bounds_error=False)
+    data_T = np.arange(700, 2025, 25)
+    data_lambda_sats = np.array([
+        497.2, 519.0, 541.6, 565.1, 589.2, 613.9, 638.8, 664.0, 689.2, 714.3,
+        739.2, 763.6, 787.4, 810.6, 833.1, 854.6, 875.3, 895.0, 913.6, 931.2,
+        947.8, 963.3, 977.7, 991.0, 1003.4, 1014.8, 1025.2, 1034.6, 1043.3,
+        1051.0, 1058.0, 1064.3, 1069.9, 1074.8, 1079.1, 1082.9, 1086.1, 1088.9,
+        1091.2, 1093.2, 1094.8, 1096.0, 1097.0, 1097.7, 1098.1, 1098.3, 1098.3,
+        1098.2, 1097.8, 1097.3, 1096.7, 1096.0, 1095.1
+    ])
+    interp = interp1d(data_T,
+                      data_lambda_sats,
+                      kind='cubic',
+                      bounds_error=False)
     lambda_sat = 1e-4 * interp(TK)
     return lambda_sat
+
 
 def lambda1_Vargaftik_1991_Eq_5(TK):
     """Thermal conductivity of a monomer gas
@@ -738,6 +762,7 @@ def lambda1_Vargaftik_1991_Eq_5(TK):
     """
     lambda1 = (541.0 + 0.485 * (TK - 1000)) * 1e-4
     return lambda1
+
 
 def lambda_Vargaftik_1991_Eq_3(x2, TK):
     """Thermal conductivity of a monomer-dimer mix
@@ -794,13 +819,15 @@ def lambda1_Vargaftik_1991_Table(TK):
     Uncertainties: on the experiments:
     "Average error for the value thus obtained is estimated to be 5 %."
     """
-    data_T = np.arange(800,2600,100) # 800 to 2500
-    data_lambda1 = np.array([450, 506, 558, 607, 655,
-        701, 745, 790, 834, 878, 921, 965,
-        1008, 1050, 1092, 1131, 1169, 1203])
+    data_T = np.arange(800, 2600, 100)  # 800 to 2500
+    data_lambda1 = np.array([
+        450, 506, 558, 607, 655, 701, 745, 790, 834, 878, 921, 965, 1008, 1050,
+        1092, 1131, 1169, 1203
+    ])
     interp = interp1d(data_T, data_lambda1, kind='cubic', bounds_error=False)
     lambda1 = 1e-4 * interp(TK)
     return lambda1
+
 
 def lambda_sat_Vargaftik_1991_Table(TK):
     """Thermal conductivity of saturated vapor
@@ -825,12 +852,15 @@ def lambda_sat_Vargaftik_1991_Table(TK):
     Thermophysics 12, no. 1 (January 1991): 85–103.
     https://doi.org/10.1007/BF00506124.
     """
-    data_T = np.arange(800,2600,100) # 800 to 2500
-    data_lambda_sat = np.array([543, 652, 753, 841, 913,
-        966, 1003, 1029, 1045, 1055, 1058, 1058, 1054,
-        1048, 1041, 1031, 1020, 1006])
-    interp = interp1d(data_T, data_lambda_sat, kind='cubic',
-            bounds_error=False)
+    data_T = np.arange(800, 2600, 100)  # 800 to 2500
+    data_lambda_sat = np.array([
+        543, 652, 753, 841, 913, 966, 1003, 1029, 1045, 1055, 1058, 1058, 1054,
+        1048, 1041, 1031, 1020, 1006
+    ])
+    interp = interp1d(data_T,
+                      data_lambda_sat,
+                      kind='cubic',
+                      bounds_error=False)
     lambda_sat = 1e-4 * interp(TK)
     return lambda_sat
 
@@ -872,7 +902,7 @@ def lambda1_Bouledroua_Table(TK):
             [1800, 90.58],
             [2000, 99.10]]
     data = np.array(data)
-    interp = interp1d(data[:,0], data[:,1], kind='cubic', bounds_error=False)
+    interp = interp1d(data[:, 0], data[:, 1], kind='cubic', bounds_error=False)
     lambda1 = 1e-3 * interp(TK)
     return lambda1
 

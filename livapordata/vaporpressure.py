@@ -42,9 +42,10 @@ def press_Alcock(t_k):
     """
     A = 5.055
     B = -8023
-    p_atm = 10 ** (A + B / t_k)
+    p_atm = 10**(A + B / t_k)
     p_pa = ATM_TO_PASCALS * p_atm
     return p_pa
+
 
 def press_Bohdansky(t_k):
     """From Bohdansky
@@ -71,7 +72,7 @@ def press_Bohdansky(t_k):
     "Data ranged from 1374 K to 1881 K."
 
     """
-    p_torr = 10 ** (7.67 - 7740/t_k)
+    p_torr = 10**(7.67 - 7740 / t_k)
     p_pa = TORR_TO_PASCALS * p_torr
     return p_pa
 
@@ -112,9 +113,10 @@ def press_Browning_and_Potter(t_k):
     c2 = -18880.659
     c3 = -0.4942
     megapascals_to_pascals = 1e6
-    p_megapascals = exp(c1 + c2 / t_k+ c3 * log(t_k))
+    p_megapascals = exp(c1 + c2 / t_k + c3 * log(t_k))
     pressure_pa = p_megapascals * megapascals_to_pascals
     return pressure_pa
+
 
 def press_NIST_webbook(t_k):
     """From the NIST Webbook
@@ -145,9 +147,10 @@ def press_NIST_webbook(t_k):
     a = 4.98831
     b = 7918.984
     c = -9.52
-    p_bars = 10 ** (a - b / (t_k  + c))
+    p_bars = 10**(a - b / (t_k + c))
     p_pa = BARS_TO_PASCALS * p_bars
     return p_pa
+
 
 def press_Davison_1968(t_k):
     """From Davison
@@ -174,7 +177,8 @@ def press_Davison_1968(t_k):
 
     The plot Figure 8 shows 800 to 1800 K so we can take that as the applicable range.
     """
-    return 10 ** (10.015 - 8064.5 / t_k)
+    return 10**(10.015 - 8064.5 / t_k)
+
 
 def press_Maucherat_1939(t_k):
     """From Maucherat
@@ -196,7 +200,7 @@ def press_Maucherat_1939(t_k):
     -----
     Applicable range: 462°C to 642°C = 735 K to 915 K.
     """
-    p_torr = 10 ** (8.012 - 8172 / t_k)
+    p_torr = 10**(8.012 - 8172 / t_k)
     p_pa = TORR_TO_PASCALS * p_torr
     return p_pa
 
@@ -225,8 +229,8 @@ def press_Yargin_and_Sidorov(t_k):
 
     No estimate of the uncertainty is provided.
     """
-    p_atm = 10 ** (+8.5088 - 8363 / t_k - 1.02573 * log10(t_k)
-                   -1.3091e-4 * t_k + 1.08872 * exp(-2940 / t_k))
+    p_atm = 10**(+8.5088 - 8363 / t_k - 1.02573 * log10(t_k) -
+                 1.3091e-4 * t_k + 1.08872 * exp(-2940 / t_k))
     p_pa = ATM_TO_PASCALS * p_atm
     return p_pa
 
@@ -263,7 +267,7 @@ def press_Golubchikov(t_k):
     Energoatomizdat, Moscow, 1989.
     (I suspect the second.)
     """
-    p_pa = 10 ** (12.4037 - 8283.1 / t_k - 0.7081 * log10(t_k))
+    p_pa = 10**(12.4037 - 8283.1 / t_k - 0.7081 * log10(t_k))
     return p_pa
 
 def press_Bystrov(t_k):
@@ -291,8 +295,8 @@ def press_Bystrov(t_k):
     tau = t_k * 1.0e-3
     c = -2.0532
     am1 = -19.4268
-    a0  = 9.4993
-    a1  = 0.7530
+    a0 = 9.4993
+    a1 = 0.7530
 
     p_megapascals = exp(c * log(tau) + am1 / tau + a0 + a1 * tau)
     megapascals_to_pascals = 1e6
@@ -331,6 +335,5 @@ def press_JSME_data_book(t_k):
     a = 9.94079
     b = -8001.8
     c = 6.676
-    pressure_pa = 10 ** (a + b / (t_k + c))
+    pressure_pa = 10**(a + b / (t_k + c))
     return pressure_pa
-
