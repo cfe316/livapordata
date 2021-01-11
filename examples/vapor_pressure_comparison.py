@@ -1,12 +1,12 @@
+# Compare literature vapor pressure data to those
+# reported by Browning and Potter
+#
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
 from livapordata.vaporpressure import *
 from livapordata.utility import error_bands
-
-# Simple plot of all the literature vapor pressures.
-# Because of the extreme ranges involved it's difficult to see the differences.
 
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(1, 1, 1)

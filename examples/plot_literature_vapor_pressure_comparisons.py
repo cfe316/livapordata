@@ -5,9 +5,6 @@ from scipy.interpolate import interp1d
 from livapordata.vaporpressure import *
 from livapordata.utility import error_bands
 
-# Simple plot of all the literature vapor pressures.
-# Because of the extreme ranges involved it's difficult to see the differences.
-
 fig = plt.figure(figsize=(6, 6))
 ax = fig.add_subplot(1, 1, 1)
 
@@ -155,15 +152,9 @@ ax.fill_between(t9,
                 color=colors[8])
 
 ax.plot(t10, p10 / interp(t10), label='Bohdansky, 1967', color=colors[9])
+ax.set_xlabel('Temperature / K')
 
 ax.set(ylim=[0.8, 1.3])
 plt.legend()
+ax.set_title('Comparisons of lithium vapor pressure curves to an average of each other')
 plt.show()
-
-# ax.set_yscale('log')
-# ax.legend()
-# ax.set_title('Literature vapor pressures, as reported in:')
-# ax.set_ylim([1e-10,3e6])
-# ax.set_ylabel('Pressure / Pa')
-# ax.set_xlabel('Temperature / K')
-# plt.show()
