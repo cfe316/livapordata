@@ -56,3 +56,7 @@ Citing
 ======
 
 If you use this package in your research, please cite it (via Zenodo; link above).
+
+Licensing
+=========
+If you're interested in using this package under a different license, let's talk.
